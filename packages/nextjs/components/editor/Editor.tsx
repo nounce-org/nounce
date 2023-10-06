@@ -5,11 +5,7 @@ import { Milkdown, useEditor } from "@milkdown/react";
 import { nord } from "@milkdown/theme-nord";
 import "@milkdown/theme-nord/style.css";
 
-const markdown = `# Milkdown Next Commonmark
-
-> You're scared of a world where you're needed.
-
-This is a demo for using Milkdown with **Next**.`;
+const markdown = `Type here`;
 
 export const MilkdownEditor: FC = () => {
   useEditor(root => {

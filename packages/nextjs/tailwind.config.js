@@ -2,30 +2,32 @@
 module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}"],
   plugins: [require("daisyui")],
-  darkTheme: "scaffoldEthDark",
+  darkTheme: "nounceDark",
   // DaisyUI theme colors
   daisyui: {
     themes: [
       {
-        scaffoldEth: {
-          primary: "#93BBFB",
-          "primary-content": "#212638",
-          secondary: "#DAE8FF",
+        nounce: {
+          dark: "#0A0C03",
+          light: "#FBFDF7",
+          primary: "#245C59",
+          "primary-content": "#FBFDF7",
+          secondary: "#B6E2DF",
           "secondary-content": "#212638",
-          accent: "#93BBFB",
+          accent: "#39938D",
           "accent-content": "#212638",
           neutral: "#212638",
-          "neutral-content": "#ffffff",
+          "neutral-content": "#FFFFFF",
           "base-100": "#ffffff",
-          "base-200": "#f4f8ff",
-          "base-300": "#DAE8FF",
-          "base-content": "#212638",
+          "base-200": "#FFFFFF",
+          "base-300": "#FFFFFF",
+          "base-content": "#010404",
           info: "#93BBFB",
           success: "#34EEB6",
           warning: "#FFCF72",
           error: "#FF8863",
 
-          "--rounded-btn": "9999rem",
+          // "--rounded-btn": "9999rem",
 
           ".tooltip": {
             "--tooltip-tail": "6px",
@@ -33,7 +35,7 @@ module.exports = {
         },
       },
       {
-        scaffoldEthDark: {
+        nounceDark: {
           primary: "#212638",
           "primary-content": "#F9FBFF",
           secondary: "#323f61",
