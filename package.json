@@ -36,5 +36,14 @@
     "husky": "~8.0.3",
     "lint-staged": "~13.2.2"
   },
-  "packageManager": "yarn@3.2.3"
+  "packageManager": "yarn@3.2.3",
+  "dependencies": {
+    "@milkdown/core": "^7.3.0",
+    "@milkdown/ctx": "^7.3.0",
+    "@milkdown/preset-commonmark": "^7.3.0",
+    "@milkdown/prose": "^7.3.0",
+    "@milkdown/react": "^7.3.0",
+    "@milkdown/theme-nord": "^7.3.0",
+    "@milkdown/transformer": "^7.3.0"
+  }
 }
