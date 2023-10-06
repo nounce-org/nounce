@@ -1,16 +1,26 @@
 // import { useEffect, useState } from "react";
 // import { MilkdownProvider } from "@milkdown/react";
+import React, { useState } from "react";
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
-
-// import { MilkdownEditor } from "~~/components/editor/Editor";
+import ArticleForm from "~~/components/editor/ArticleForm";
+import EventForm from "~~/components/editor/EventForm";
 
 const Editor: NextPage = () => {
-  // const [isClient, setIsClient] = useState(false);
-  // Wait until after client-side hydration to show
-  // useEffect(() => {
-  //   setIsClient(true);
-  // }, []);
+  const [activeTab, setActiveTab] = useState<"article" | "event" | "media" | null>("article");
+  const [metadata, setMetadata] = useState({ title: "", description: "" });
+  const [formData, setFormData] = useState({});
+
+  const handleSubmit = () => {
+    const payload = {
+      type: activeTab,
+      metadata: metadata,
+      data: formData,
+    };
+
+    console.log(payload);
+  };
+
   return (
     <>
       <MetaHeader title="Create announcement" description="Editor for web3 announcement">
@@ -18,34 +28,63 @@ const Editor: NextPage = () => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />
       </MetaHeader>
-      <div className=" mx-6">
-        <div className="flex flex-row gap-6">
-          <div className="card basis-2/3 bg-primary">
+      <div className="container mx-auto flex flex-col md:flex-row">
+        <div className="md:basis-2/3">
+          <div className="card w-full bg-base-100">
             <div className="card-body">
-              <div className="flex flex-row gap-6">
-                <button className="btn btn-sm btn-secondary font-bold">B</button>
-                <button className="btn btn-sm btn-secondary italic">i</button>
-                <button className="btn btn-sm btn-secondary underline">u</button>
-                <button className="btn btn-sm btn-secondary line-through">t</button>
+              <h2 className="card-title">Announcement</h2>
+              <div className="tabs tabs-boxed">
+                <a
+                  className={`tab ${activeTab === "article" ? "tab-active" : ""}`}
+                  onClick={() => setActiveTab("article")}
+                >
+                  Article
+                </a>
+                <a className={`tab ${activeTab === "event" ? "tab-active" : ""}`} onClick={() => setActiveTab("event")}>
+                  Event
+                </a>
+                <a className={`tab ${activeTab === "media" ? "tab-active" : ""}`} onClick={() => setActiveTab("media")}>
+                  Media
+                </a>
               </div>
-              <textarea className="textarea rounded-xl h-full" placeholder="Type your announcement"></textarea>
 
-              {/* <MilkdownProvider>{isClient && <MilkdownEditor />}</MilkdownProvider> */}
+              {activeTab === "article" && <ArticleForm onChange={data => setFormData(data)} />}
+              {activeTab === "event" && <EventForm onChange={data => setFormData(data)} />}
+              {activeTab === "media" && <div>Media Form (You can replace this with your Media form component)</div>}
             </div>
           </div>
-          <div className="card bg-secondary w-full basis-1/3">
+        </div>
+        <div className="md:basis-1/3">
+          <div className="card w-full bg-base-100">
             <div className="card-body">
-              <h2 className="card-title">Announcement information</h2>
-              <div className="flex flex-col gap-6">
-                <input type="text" placeholder="Title" className="input input-bordered w-full input-sm " />
-                <input type="text" placeholder="Description" className="input input-bordered w-full input-sm " />
-                <input type="text" placeholder="Type here" className="input input-bordered w-full input-sm " />
-                <input type="text" placeholder="Type here" className="input input-bordered w-full input-sm " />
-                <input type="text" placeholder="Type here" className="input input-bordered w-full input-sm " />
+              <h2 className="card-title">Information</h2>
+
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text">Title</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Type here"
+                  className="input input-bordered w-full"
+                  onChange={e => setMetadata(prev => ({ ...prev, title: e.target.value }))}
+                />
               </div>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary w-full">Post announcement</button>
+
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text">Description</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered w-full"
+                  placeholder="Type here"
+                  onChange={e => setMetadata(prev => ({ ...prev, description: e.target.value }))}
+                ></textarea>
               </div>
+
+              <button className="btn btn-primary" onClick={handleSubmit}>
+                Submit
+              </button>
             </div>
           </div>
         </div>
