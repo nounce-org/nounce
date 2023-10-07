@@ -5,6 +5,7 @@ import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 import ArticleForm from "~~/components/editor/ArticleForm";
 import EventForm from "~~/components/editor/EventForm";
+import MediaForm from "~~/components/editor/MediaForm";
 
 const Editor: NextPage = () => {
   const [activeTab, setActiveTab] = useState<"article" | "event" | "media" | null>("article");
@@ -28,7 +29,7 @@ const Editor: NextPage = () => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />
       </MetaHeader>
-      <div className="container mx-auto flex flex-col md:flex-row">
+      <div className="container mx-auto flex flex-col md:flex-row gap-6">
         <div className="md:basis-2/3">
           <div className="card w-full bg-base-100">
             <div className="card-body">
@@ -36,21 +37,36 @@ const Editor: NextPage = () => {
               <div className="tabs tabs-boxed">
                 <a
                   className={`tab ${activeTab === "article" ? "tab-active" : ""}`}
-                  onClick={() => setActiveTab("article")}
+                  onClick={() => {
+                    setFormData({}); // Reset formData when changing tab
+                    setActiveTab("article");
+                  }}
                 >
                   Article
                 </a>
-                <a className={`tab ${activeTab === "event" ? "tab-active" : ""}`} onClick={() => setActiveTab("event")}>
+                <a
+                  className={`tab ${activeTab === "event" ? "tab-active" : ""}`}
+                  onClick={() => {
+                    setFormData({}); // Reset formData when changing tab
+                    setActiveTab("event");
+                  }}
+                >
                   Event
                 </a>
-                <a className={`tab ${activeTab === "media" ? "tab-active" : ""}`} onClick={() => setActiveTab("media")}>
+                <a
+                  className={`tab ${activeTab === "media" ? "tab-active" : ""}`}
+                  onClick={() => {
+                    setFormData({}); // Reset formData when changing tab
+                    setActiveTab("media");
+                  }}
+                >
                   Media
                 </a>
               </div>
 
               {activeTab === "article" && <ArticleForm onChange={data => setFormData(data)} />}
               {activeTab === "event" && <EventForm onChange={data => setFormData(data)} />}
-              {activeTab === "media" && <div>Media Form (You can replace this with your Media form component)</div>}
+              {activeTab === "media" && <MediaForm onChange={data => setFormData(data)} />}
             </div>
           </div>
         </div>
