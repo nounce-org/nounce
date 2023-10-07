@@ -2,6 +2,7 @@
 // import { MilkdownProvider } from "@milkdown/react";
 import React, { useState } from "react";
 import type { NextPage } from "next";
+import { keccak256, toHex } from "viem";
 import { MetaHeader } from "~~/components/MetaHeader";
 import ArticleForm from "~~/components/editor/ArticleForm";
 import EventForm from "~~/components/editor/EventForm";
@@ -11,6 +12,17 @@ const Editor: NextPage = () => {
   const [activeTab, setActiveTab] = useState<"article" | "event" | "media" | null>("article");
   const [metadata, setMetadata] = useState({ title: "", description: "" });
   const [formData, setFormData] = useState({});
+  const [contentHash, setContentHash] = useState<string | null>(null);
+
+  const resetData = () => {
+    setFormData({});
+    setContentHash(null);
+  };
+
+  function shortenHash(hash: string | null): string {
+    if (!hash || hash.length <= 8) return hash || ""; // return original if it's short enough or empty if null
+    return `${hash.substr(0, 4)}..${hash.substr(-4)}`;
+  }
 
   const handleSubmit = () => {
     const payload = {
@@ -29,50 +41,67 @@ const Editor: NextPage = () => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />
       </MetaHeader>
-      <div className="container mx-auto flex flex-col md:flex-row gap-6">
-        <div className="md:basis-2/3">
-          <div className="card w-full bg-base-100">
-            <div className="card-body">
-              <h2 className="card-title">Announcement</h2>
-              <div className="tabs tabs-boxed">
-                <a
-                  className={`tab ${activeTab === "article" ? "tab-active" : ""}`}
-                  onClick={() => {
-                    setFormData({}); // Reset formData when changing tab
-                    setActiveTab("article");
-                  }}
-                >
-                  Article
-                </a>
-                <a
-                  className={`tab ${activeTab === "event" ? "tab-active" : ""}`}
-                  onClick={() => {
-                    setFormData({}); // Reset formData when changing tab
-                    setActiveTab("event");
-                  }}
-                >
-                  Event
-                </a>
-                <a
-                  className={`tab ${activeTab === "media" ? "tab-active" : ""}`}
-                  onClick={() => {
-                    setFormData({}); // Reset formData when changing tab
-                    setActiveTab("media");
-                  }}
-                >
-                  Media
-                </a>
-              </div>
+      <div className="flex flex-col md:flex-row gap-6 w-full px-6">
+        <div className="md:basis-2/3 flex flex-col gap-6">
+          <div className="join w-full rounded-3xl bg-base-100 shadow-none">
+            <input
+              className="join-item btn grow bg-base-100 shadow-none"
+              type="radio"
+              name="options"
+              aria-label="Article"
+              checked={activeTab === "article"}
+              onChange={() => {
+                resetData();
+                setActiveTab("article");
+              }}
+            />
+            <input
+              className="join-item btn grow bg-base-100 shadow-none"
+              type="radio"
+              name="options"
+              aria-label="Event"
+              checked={activeTab === "event"}
+              onChange={() => {
+                resetData();
+                setActiveTab("event");
+              }}
+            />
+            <input
+              className="join-item btn grow bg-base-100 shadow-none"
+              type="radio"
+              name="options"
+              aria-label="Media"
+              checked={activeTab === "media"}
+              onChange={() => {
+                resetData();
+                setActiveTab("media");
+              }}
+            />
+          </div>
 
-              {activeTab === "article" && <ArticleForm onChange={data => setFormData(data)} />}
+          <div className="card w-full bg-base-100 rounded-3xl">
+            <div className="card-body">
+              {activeTab === "article" && (
+                <ArticleForm
+                  onChange={data => {
+                    setFormData(data);
+                    if (data.content) {
+                      const hash = keccak256(toHex(data.content));
+                      setContentHash(hash);
+                    }
+                  }}
+                />
+              )}
               {activeTab === "event" && <EventForm onChange={data => setFormData(data)} />}
               {activeTab === "media" && <MediaForm onChange={data => setFormData(data)} />}
+
+              <div className="w-full text-right text-sm">Hash: {shortenHash(contentHash)}</div>
             </div>
           </div>
         </div>
         <div className="md:basis-1/3">
-          <div className="card w-full bg-base-100">
-            <div className="card-body">
+          <div className="card w-full bg-base-100 rounded-3xl">
+            <div className="card-body ">
               <h2 className="card-title">Information</h2>
 
               <div className="form-control w-full">
