@@ -5,7 +5,7 @@ const contracts = {
       chainId: "31337",
       contracts: {
         YourContract: {
-          address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+          address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
           abi: [
             {
               inputs: [
@@ -17,6 +17,64 @@ const contracts = {
               ],
               stateMutability: "nonpayable",
               type: "constructor",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "timestamp",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "string",
+                      name: "title",
+                      type: "string",
+                    },
+                    {
+                      internalType: "string",
+                      name: "description",
+                      type: "string",
+                    },
+                    {
+                      internalType: "string",
+                      name: "url",
+                      type: "string",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "contentHash",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "string",
+                      name: "dataType",
+                      type: "string",
+                    },
+                  ],
+                  indexed: false,
+                  internalType: "struct YourContract.Metadata",
+                  name: "metadata",
+                  type: "tuple",
+                },
+              ],
+              name: "Announcement",
+              type: "event",
             },
             {
               anonymous: false,
@@ -48,6 +106,51 @@ const contracts = {
               ],
               name: "GreetingChange",
               type: "event",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "string",
+                      name: "title",
+                      type: "string",
+                    },
+                    {
+                      internalType: "string",
+                      name: "description",
+                      type: "string",
+                    },
+                    {
+                      internalType: "string",
+                      name: "url",
+                      type: "string",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "contentHash",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "string",
+                      name: "dataType",
+                      type: "string",
+                    },
+                  ],
+                  internalType: "struct YourContract.Metadata",
+                  name: "metadata",
+                  type: "tuple",
+                },
+              ],
+              name: "announce",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
             },
             {
               inputs: [],

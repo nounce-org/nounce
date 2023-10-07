@@ -1,6 +1,12 @@
 import React from "react";
 
-const ArticleForm: React.FC<{ onChange: (data: any) => void }> = ({ onChange }) => {
+interface Props {
+  onChange: (data: any) => void;
+  disabled?: boolean;
+}
+
+const ArticleForm: React.FC<Props> = ({ onChange, disabled }) => {
+  // const ArticleForm: React.FC<{ onChange: (data: any) => void }> = ({ onChange }) => {
   return (
     <div className="full">
       <div className="form-control w-full">
@@ -13,6 +19,7 @@ const ArticleForm: React.FC<{ onChange: (data: any) => void }> = ({ onChange }) 
           placeholder="Type here"
           className="textarea textarea-bordered w-full h-40"
           onChange={e => onChange({ content: e.target.value })}
+          disabled={disabled}
         ></textarea>
       </div>
     </div>
