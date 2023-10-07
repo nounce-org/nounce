@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
+import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 
 const Announcements: NextPage = () => {
@@ -27,7 +28,6 @@ const Announcements: NextPage = () => {
           <div className=" grid grid-cols-1 md:grid-cols-2 gap-6 mx-6">
             {events.map((event, index) => {
               const { signer, signature, timestamp, metadata } = event.args;
-
               return (
                 <div className="card w-full bg-base-100" key={index}>
                   <div className="card-body">
@@ -40,17 +40,19 @@ const Announcements: NextPage = () => {
                     <div className="w-full flex flex-col">
                       <div className="overflow-scroll">{metadata?.description || "N/A"} </div>
 
-                      <div className="overflow-scroll">Signer: {signer} </div>
-                      <div className="overflow-scroll"> Signature: {signature} </div>
+                      <div className="flex flex-row gap-6">
+                        Signed by:
+                        <Address address={signer} />{" "}
+                      </div>
 
-                      {/* URL: {metadata?.url || 'N/A'} <br /> */}
-                      {/* Content Hash: {metadata?.contentHash || 'N/A'} <br />
-                                            Data Type: {metadata?.dataType || 'N/A'} <br /> */}
+                      <div className="flex flex-row gap-6">
+                        Published by:
+                        <Address address={event.transaction.from} />{" "}
+                      </div>
+                      <div className="overflow-scroll"> Signature: {signature} </div>
                     </div>
 
                     <div className="card-actions justify-end">
-                      {/* From: {event.transaction.from} <br />
-                                        To: {event.transaction.to} <br /> */}
                       <div className="badge badge-outline">TX</div>
                       <div className="badge badge-primary">✓</div>
                     </div>

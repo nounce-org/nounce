@@ -42,31 +42,36 @@ export const Header = () => {
       <li>
         <NavLink href="/editor">
           <BugAntIcon className="h-4 w-4" />
-          Editor
+          Edit
         </NavLink>
       </li>
       <li>
         <NavLink href="/announcements">
           <BugAntIcon className="h-4 w-4" />
-          Announcements
+          Announce
+        </NavLink>
+      </li>
+      <li>
+        <NavLink href="/storage">
+          <BugAntIcon className="h-4 w-4" />
+          Store
         </NavLink>
       </li>
       <li>
         <NavLink href="/debug">
-          <BugAntIcon className="h-4 w-4" />
-          Contracts
+          <BugAntIcon className="h-4 w-4" />C
         </NavLink>
       </li>
       <li>
         <NavLink href="/example-ui">
           <SparklesIcon className="h-4 w-4" />
-          Example UI
+          UI
         </NavLink>
       </li>
       <li>
         <NavLink href="/blockexplorer">
           <MagnifyingGlassIcon className="h-4 w-4" />
-          Block Explorer
+          Ex
         </NavLink>
       </li>
     </>

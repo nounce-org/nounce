@@ -1,8 +1,5 @@
-// import { useEffect, useState } from "react";
-// import { MilkdownProvider } from "@milkdown/react";
 import React, { useState } from "react";
 import type { NextPage } from "next";
-import { keccak256, toHex } from "viem";
 import { parseEther } from "viem";
 import { useSignTypedData } from "wagmi";
 import { MetaHeader } from "~~/components/MetaHeader";
@@ -10,6 +7,7 @@ import ArticleForm from "~~/components/editor/ArticleForm";
 import EventForm from "~~/components/editor/EventForm";
 import MediaForm from "~~/components/editor/MediaForm";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { generateHash, shortenHash } from "~~/utils/nounce/utils";
 
 const Editor: NextPage = () => {
   const [activeTab, setActiveTab] = useState<"article" | "event" | "media" | null>("article");
@@ -25,11 +23,6 @@ const Editor: NextPage = () => {
     setContentHash(null);
     console.log(formData);
   };
-
-  function shortenHash(hash: string | null): string {
-    if (!hash || hash.length <= 8) return hash || ""; // return original if it's short enough or empty if null
-    return `${hash.substr(0, 4)}..${hash.substr(-4)}`;
-  }
 
   const domain = {
     name: "Your App Name",
@@ -56,31 +49,16 @@ const Editor: NextPage = () => {
     dataType: activeTab || "article", // handle null case, you can provide a default value like "article" here
   } as const;
 
-  // if (signature) {
-  // const { writeAsync, isLoading: isWritingLoading } = useScaffoldContractWrite({
-  //   contractName: "YourContract",
-  //   functionName: "announce",
-  //   value: "0.00",
-  //   args: [signature as `0x${string}`, message],
-  //   onBlockConfirmation: txnReceipt => {
-  //     console.log("📦 Transaction blockHash", txnReceipt.blockHash);
-  //   },
-  // });
-
   const { writeAsync } = useScaffoldContractWrite({
     contractName: "YourContract",
     functionName: "announce",
     value: parseEther("0.00"),
     args: [signature as `0x${string}`, message],
-    // For payable functions, expressed in ETH
-    // The number of block confirmations to wait for before considering transaction to be confirmed (default : 1).
     blockConfirmations: 1,
-    // The callback function to execute when the transaction is confirmed.
     onBlockConfirmation: txnReceipt => {
       console.log("Transaction blockHash", txnReceipt.blockHash);
     },
   });
-  // }
 
   const { signTypedData } = useSignTypedData({
     domain,
@@ -94,12 +72,6 @@ const Editor: NextPage = () => {
       console.log("Success", data);
     },
   });
-
-  // string title;         // URL of the content with protocol
-  // string description;         // URL of the content with protocol
-  // string url;         // URL of the content with protocol
-  // bytes32 contentHash;     // Hash of the content
-  // string dataType;    // Type of data (text, event, media, etc.)
 
   return (
     <>
@@ -155,7 +127,7 @@ const Editor: NextPage = () => {
                   onChange={data => {
                     setFormData(data);
                     if (data.content) {
-                      const hash = keccak256(toHex(data.content));
+                      const hash = generateHash(data.content);
                       setContentHash(hash);
                     }
                   }}
