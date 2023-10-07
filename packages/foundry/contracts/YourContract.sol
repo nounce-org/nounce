@@ -15,6 +15,27 @@ import "forge-std/console.sol";
 contract YourContract {
     // State Variables
     address public immutable owner;
+
+    struct Metadata {
+        string title;         // URL of the content with protocol
+        string description;         // URL of the content with protocol
+        string url;         // URL of the content with protocol
+        bytes32 contentHash;     // Hash of the content
+        string dataType;    // Type of data (text, event, media, etc.)
+    }
+
+    event Announcement(
+        address indexed signer, 
+        bytes signature, 
+        uint timestamp,
+        Metadata metadata);
+
+        // The function to make an announcement
+    function announce(bytes memory signature, Metadata memory metadata) public isOwner {
+        emit Announcement(msg.sender,  signature, block.timestamp, metadata);
+    }
+
+
     string public greeting = "Building Unstoppable Apps!!!";
     bool public premium = false;
     uint256 public totalCounter = 0;
