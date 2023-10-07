@@ -1,4 +1,5 @@
 import React from "react";
+import dynamic from "next/dynamic";
 
 interface Props {
   onChange: (data: any) => void;
@@ -6,10 +7,13 @@ interface Props {
 }
 
 const ArticleForm: React.FC<Props> = ({ onChange, disabled }) => {
-  // const ArticleForm: React.FC<{ onChange: (data: any) => void }> = ({ onChange }) => {
+  const MDEditor = dynamic(() => import("~~/components/editor/MDEditor"), { ssr: false });
+
   return (
     <div className="full">
       <div className="form-control w-full">
+        <MDEditor />
+
         <label className="label flex justify-start	gap-6">
           <button className="btn btn-sm shrink font-bold">B</button>
           <button className="btn btn-sm italic">i</button>
