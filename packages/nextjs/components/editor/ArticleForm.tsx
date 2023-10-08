@@ -11,9 +11,8 @@ const ArticleForm: React.FC<Props> = ({ onChange, disabled }) => {
 
   return (
     <div className="full">
+      <MDEditor />
       <div className="form-control w-full">
-        <MDEditor />
-
         <label className="label flex justify-start	gap-6">
           <button className="btn btn-sm shrink font-bold">B</button>
           <button className="btn btn-sm italic">i</button>

@@ -33,6 +33,7 @@ const PlainTextCodeEditorDescriptor: CodeBlockEditorDescriptor = {
 const MDEditor = () => {
   return (
     <MDXEditor
+      className="bg-base-200 rounded-2xl"
       onChange={console.log}
       markdown={"Hello world!"}
       plugins={[
