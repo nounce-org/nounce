@@ -57,7 +57,7 @@ export const FaucetButton = () => {
       }
       data-tip="Grab funds from faucet"
     >
-      <button className="btn btn-primary p-3 rounded-3xl" onClick={sendETH} disabled={loading}>
+      <button className="btn btn-ghost p-3 rounded-none" onClick={sendETH} disabled={loading}>
         {!loading ? (
           <BanknotesIcon className="h-4 w-4" />
         ) : (

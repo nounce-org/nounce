@@ -40,8 +40,39 @@ export const RainbowKitCustomConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <button className="btn btn-primary btn-sm" onClick={openConnectModal} type="button">
-                    Connect Wallet
+                  <button
+                    className="btn btn-ghost p-0 flex flex-row rounded-none text-lg font-semibold"
+                    onClick={openConnectModal}
+                    type="button"
+                  >
+                    <svg
+                      className="w-auto h-full"
+                      viewBox="0 0 200 200"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <defs>
+                        <linearGradient x1="100%" y1="0%" x2="0%" y2="100%" id="linearGradient-1">
+                          <stop stop-color="#32C5FF" offset="0%"></stop>
+                          <stop stop-color="#B620E0" offset="51.2583893%"></stop>
+                          <stop stop-color="#F7B500" offset="100%"></stop>
+                        </linearGradient>
+                      </defs>
+                      <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="Group" transform="translate(0, 34)">
+                          <rect id="Rectangle" fill="#000000" x="0" y="0" width="200" height="133"></rect>
+                          <rect
+                            id="Rectangle"
+                            fill="url(#linearGradient-1)"
+                            x="133"
+                            y="50"
+                            width="33"
+                            height="33"
+                          ></rect>
+                        </g>
+                      </g>
+                    </svg>
+                    Connect
                   </button>
                 );
               }
@@ -92,7 +123,10 @@ export const RainbowKitCustomConnectButton = () => {
                     </span>
                   </div>
                   <div className="dropdown dropdown-end leading-3">
-                    <label tabIndex={0} className="btn btn-primary px-3 rounded-3xl dropdown-toggle gap-0 !h-auto">
+                    <label
+                      tabIndex={0}
+                      className="btn btn-ghost px-3 rounded-3xl dropdown-toggle gap-0 !h-auto rounded-none text-lg font-semibold"
+                    >
                       <BlockieAvatar address={account.address} size={30} ensImage={account.ensAvatar} />
                       <span className="ml-2 mr-1">{account.displayName}</span>
                       <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />

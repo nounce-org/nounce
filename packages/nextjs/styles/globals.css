@@ -2,9 +2,14 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-:root,
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+
 [data-theme] {
   background: hsl(var(--b2));
+}
+
+:where(.navbar > *) {
+  align-items: normal;
 }
 
 body {

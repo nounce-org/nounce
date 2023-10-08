@@ -6,13 +6,17 @@ module.exports = {
   // DaisyUI theme colors
   daisyui: {
     themes: [
-
       "light", "dark",
     ],
   },
   theme: {
     // Extend Tailwind classes (e.g. font-bai-jamjuree, animate-grow)
     extend: {
+      fontFamily: {
+        "sans": ["Open Sans", 'sans-serif'],
+        "serif": ["Merriweather", 'serif'],
+        // "serif": ["Source Serif 4", 'serif'],
+      },
     },
   },
 };

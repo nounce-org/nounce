@@ -1,9 +1,10 @@
 import React, { useCallback, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon } from "@heroicons/react/24/outline";
+import { SwitchTheme } from "~~/components/SwitchTheme";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
+import Logo from "~~/components/ui/Logo";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
@@ -15,8 +16,8 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
       href={href}
       passHref
       className={`${
-        isActive ? "bg-primary text-white  font-bold" : ""
-      } hover:bg-primary focus:bg-primary focus:text-white p-3 rounded-3xl gap-2 grid grid-flow-col`}
+        isActive ? "font-extrabold border-b-4" : ""
+      } rounded-none gap-6 grid grid-flow-col text-lg font-semibold`}
     >
       {children}
     </Link>
@@ -37,23 +38,22 @@ export const Header = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink href="/">Home</NavLink>
+        <NavLink href="/create">CREATE</NavLink>
       </li>
       <li>
-        <NavLink href="/editor">
-          <BugAntIcon className="h-4 w-4" />
-          Edit
+        <NavLink href="/edit">
+          {/* <BugAntIcon className="h-4 w-4" /> */}
+          EDIT
         </NavLink>
       </li>
       <li>
         <NavLink href="/announcements">
-          <BugAntIcon className="h-4 w-4" />
-          Announce
+          {/* <BugAntIcon className="h-4 w-4" /> */}
+          CONFIG
         </NavLink>
       </li>
-      <li>
+      {/* <li>
         <NavLink href="/storage">
-          <BugAntIcon className="h-4 w-4" />
           Store
         </NavLink>
       </li>
@@ -73,18 +73,20 @@ export const Header = () => {
           <MagnifyingGlassIcon className="h-4 w-4" />
           Ex
         </NavLink>
-      </li>
+      </li> */}
     </>
   );
 
   return (
-    <div className="w-full p-6">
-      <div className="sticky navbar bg-base-100 rounded-3xl">
+    <div className="w-full">
+      <div className="sticky navbar align-items-normal bg-base-100 p-0 h-14 m-0">
         <div className="navbar-start">
           <div className="lg:hidden dropdown" ref={burgerMenuRef}>
             <label
               tabIndex={0}
-              className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"}`}
+              className={`ml-1 btn btn-square btn-primary rounded-0 ${
+                isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"
+              }`}
               onClick={() => {
                 setIsDrawerOpen(prevIsOpenState => !prevIsOpenState);
               }}
@@ -103,18 +105,19 @@ export const Header = () => {
               </ul>
             )}
           </div>
-          <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
-            <div className="flex relative w-24 h-10">
-              <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
+          <Link href="/" passHref className="hidden md:block items-center gap-2 shrink-0 bg-gray-100 w-14 h-14 mr-12">
+            <div className="flex relative w-8 h-8 m-3">
+              <Logo format="logo" className="w-8 h-8 fill-current" />
             </div>
             <div className="flex flex-col">
               {/* <span className="font-bold text-xl leading-tight">Nounce</span> */}
               {/* <span className="text-xs">Ethereum dev stack</span> */}
             </div>
           </Link>
-          <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>
+          <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal h-14  gap-2">{navLinks}</ul>
         </div>
         <div className="navbar-end">
+          <SwitchTheme className="pointer-events-auto" />
           <RainbowKitCustomConnectButton />
           <FaucetButton />
         </div>

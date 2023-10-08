@@ -40,14 +40,16 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
         avatar={BlockieAvatar}
         theme={isDarkTheme ? darkTheme() : lightTheme()}
       >
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="relative flex flex-col flex-1">
-            <Component {...pageProps} />
-          </main>
-          <Footer />
+        <div className="w-screen h-screen bg-gradient-to-bl from-sky-600 via-fuchsia-600 to-yellow-600 p-3 md:p-8 pb-0 overflow-y-scroll">
+          <div className="flex flex-col bg-base-100 min-h-full">
+            <Header />
+            <main className="relative flex flex-col flex-1 px-12 pt-12">
+              <Component {...pageProps} />
+            </main>
+            <Footer />
+            <Toaster />
+          </div>
         </div>
-        <Toaster />
       </RainbowKitProvider>
     </WagmiConfig>
   );

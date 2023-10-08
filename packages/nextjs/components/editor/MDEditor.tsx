@@ -12,6 +12,9 @@ const {
   markdownShortcutPlugin,
   useCodeBlockEditorContext,
   toolbarPlugin,
+  BlockTypeSelect,
+  CreateLink,
+  linkDialogPlugin,
   UndoRedo,
   BoldItalicUnderlineToggles,
   ListsToggle,
@@ -33,7 +36,7 @@ const PlainTextCodeEditorDescriptor: CodeBlockEditorDescriptor = {
 const MDEditor = () => {
   return (
     <MDXEditor
-      className="bg-base-200 rounded-2xl"
+      className="bg-base-100 border-r-4 border-b-4 border-base-200 rounded-none"
       onChange={console.log}
       markdown={"Hello world!"}
       plugins={[
@@ -41,9 +44,11 @@ const MDEditor = () => {
           toolbarContents: () => (
             <>
               {" "}
+              <BlockTypeSelect />
               <UndoRedo />
               <BoldItalicUnderlineToggles />
               <ListsToggle />
+              <CreateLink />
             </>
           ),
         }),
@@ -52,6 +57,7 @@ const MDEditor = () => {
         listsPlugin(),
         linkPlugin(),
         quotePlugin(),
+        linkDialogPlugin(),
         markdownShortcutPlugin(),
       ]}
     />
