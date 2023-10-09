@@ -39,6 +39,7 @@ const MDEditor = () => {
       className="bg-base-100 border-r-4 border-b-4 border-base-200 rounded-none"
       onChange={console.log}
       markdown={"Hello world!"}
+      contentEditableClassName="prose min-h-40"
       plugins={[
         toolbarPlugin({
           toolbarContents: () => (
