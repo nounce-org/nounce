@@ -10,9 +10,9 @@ const Logo: React.FC<LogoProps> = ({ className, format }) => {
         <svg className={className} viewBox="0 0 240 240" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient x1="100%" y1="0%" x2="0%" y2="100%" id="linearGradient-1">
-              <stop stop-color="#32C5FF" offset="0%"></stop>
-              <stop stop-color="#B620E0" offset="51.2583893%"></stop>
-              <stop stop-color="#F7B500" offset="100%"></stop>
+              <stop stopColor="#32C5FF" offset="0%"></stop>
+              <stop stopColor="#B620E0" offset="51.2583893%"></stop>
+              <stop stopColor="#F7B500" offset="100%"></stop>
             </linearGradient>
           </defs>
           <polygon id="Path" points="100 0 100 80 80 80 80 240 0 240 0 0"></polygon>

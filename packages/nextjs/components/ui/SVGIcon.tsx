@@ -9,9 +9,9 @@ const SVGIcon: React.FC<SVGIconProps> = ({ name, className }) => {
   const gradientDefs = (
     <defs>
       <linearGradient x1="100%" y1="0%" x2="0%" y2="100%" id="gradient_nounce">
-        <stop stop-color="#0284c7" offset="0%"></stop>
-        <stop stop-color="#c026d3" offset="50%"></stop>
-        <stop stop-color="#ca8a04" offset="100%"></stop>
+        <stop stopColor="#0284c7" offset="0%"></stop>
+        <stop stopColor="#c026d3" offset="50%"></stop>
+        <stop stopColor="#ca8a04" offset="100%"></stop>
       </linearGradient>
     </defs>
   );

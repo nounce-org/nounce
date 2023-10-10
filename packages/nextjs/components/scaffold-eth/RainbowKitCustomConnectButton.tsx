@@ -53,12 +53,12 @@ export const RainbowKitCustomConnectButton = () => {
                     >
                       <defs>
                         <linearGradient x1="100%" y1="0%" x2="0%" y2="100%" id="linearGradient-1">
-                          <stop stop-color="#32C5FF" offset="0%"></stop>
-                          <stop stop-color="#B620E0" offset="51.2583893%"></stop>
-                          <stop stop-color="#F7B500" offset="100%"></stop>
+                          <stop stopColor="#32C5FF" offset="0%"></stop>
+                          <stop stopColor="#B620E0" offset="51.2583893%"></stop>
+                          <stop stopColor="#F7B500" offset="100%"></stop>
                         </linearGradient>
                       </defs>
-                      <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g id="Artboard" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                         <g id="Group" transform="translate(0, 34)">
                           <rect id="Rectangle" fill="#000000" x="0" y="0" width="200" height="133"></rect>
                           <rect

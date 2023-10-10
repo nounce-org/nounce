@@ -22,6 +22,11 @@ const Uploader: React.FC<Props> = ({ post }) => {
         </a>
       </div>
     );
-  else return <div>Uploading your file</div>;
+  else
+    return (
+      <div>
+        Uploading your file <span className="loading loading-ball loading-lg"></span>
+      </div>
+    );
 };
 export default Uploader;

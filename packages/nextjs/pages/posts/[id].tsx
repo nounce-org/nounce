@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { parseEther } from "viem";
 import FormLoader from "~~/components/posts/typeForm/FormLoader";
 import Uploader from "~~/components/posts/typeForm/Uploader";
 import Steps from "~~/components/ui/Steps";
 import { postTable } from "~~/database/database.config";
-import { IPost, PostState, PostType } from "~~/database/types";
+import { IPost, PostState } from "~~/database/types";
 import { useTypedDataSignature } from "~~/hooks/nounce/useTypedDataSignature";
 import { useWeb3Storage } from "~~/hooks/nounce/useWeb3Storage";
+// import { usePublishPost } from "~~/hooks/nounce/usePublishPost";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { generateHash, shortenHash } from "~~/utils/nounce/utils";
 
 const Post = () => {
-  const defaultPost: IPost = {
-    title: "",
-    state: PostState.DRAFT,
-    type: PostType.ARTICLE,
-  };
+  // const defaultPost: IPost = {
+  //   title: "",
+  //   state: PostState.DRAFT,
+  //   type: PostType.ARTICLE,
+  // };
 
   const router = useRouter();
   const { id } = router.query;
@@ -46,13 +49,21 @@ const Post = () => {
         try {
           const newCid = await storeFiles(post.content, "document.md", "text/markdown");
           console.log("CID available:", newCid);
-          setPost({
-            ...post,
-            state: PostState.UPLOADED,
-            url: newCid,
-          });
-          handleSave();
-          signTypedData();
+
+          if (post) {
+            post.url = newCid;
+            post.state = PostState.UPLOADED;
+            setPost({
+              ...post,
+              state: PostState.UPLOADED,
+            });
+            console.log("setPost", post, newCid);
+            setDidChange(true);
+            await handleSave();
+            console.log("saved", post);
+            signData();
+            //signData
+          }
           // Here you can do whatever you want after the upload completes
         } catch (error) {
           console.error("Error during upload:", error);
@@ -60,16 +71,89 @@ const Post = () => {
     }
   };
 
-  const { signTypedData } = useTypedDataSignature({
-    post: post || defaultPost, // Replace with your actual post data
-    onSuccess: data => {
-      if (post) {
-        post.signature = data;
+  const signData = async () => {
+    if (post) {
+      const signature = await getSignature(post);
+      if (post && signature) {
+        post.signature = signature;
         post.state = PostState.SIGNED;
+        setPost({
+          ...post,
+          state: PostState.SIGNED,
+        });
+        setDidChange(true);
         handleSave();
       }
+    }
+  };
+
+  // const domain = {
+  //   name: "Your App Name",
+  //   version: "1",
+  //   chainId: 31337, // Change this if you're on a different chain
+  //   verifyingContract: "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC",
+  // } as const;
+
+  // const types = {
+  //   Data: [
+  //     { name: "title", type: "string" },
+  //     { name: "description", type: "string" },
+  //     { name: "url", type: "string" },
+  //     { name: "contentHash", type: "string" },
+  //     { name: "dataType", type: "string" },
+  //   ],
+  // } as const;
+
+  const message = {
+    title: post?.title || "",
+    description: post?.description || "",
+    url: post?.url || "",
+    contentHash: (post?.contentHash as `0x${string}`) || "", // handle null case
+    dataType: post?.title || "article", // handle null case, you can provide a default value like "article" here
+  } as const;
+
+  const { writeAsync } = useScaffoldContractWrite({
+    contractName: "YourContract",
+    functionName: "announce",
+    value: parseEther("0.00"),
+    args: [post?.signature as `0x${string}`, message],
+    blockConfirmations: 1,
+    onBlockConfirmation: txnReceipt => {
+      console.log("Transaction blockHash", txnReceipt.blockHash);
     },
   });
+
+  const publish = async () => {
+    if (post) {
+      try {
+        await writeAsync();
+        post.state = PostState.PUBLISHED;
+        setPost({
+          ...post,
+          state: PostState.PUBLISHED,
+        });
+        setDidChange(true);
+        handleSave();
+      } catch (error) {
+        console.log(error);
+      }
+      // const r = await getPublish(post);
+    }
+  };
+
+  const { getSignature } = useTypedDataSignature();
+
+  // const { signTypedData } = useTypedDataSignature({
+  //   post: post || defaultPost, // Replace with your actual post data
+  //   onSuccess: data => {
+  //     if (post) {
+  //       post.signature = data;
+  //       post.state = PostState.SIGNED;
+  //       // setDidChange(true);
+  //       handleSave();
+  //     }
+  //   },
+  // });
 
   const handleFormUpdate = (updatedData: string) => {
     if (post) {
@@ -110,16 +194,16 @@ const Post = () => {
     }
   }, [id]);
 
-  // useEffect(() => {
-  //   const autosaveInterval = setInterval(() => {
-  //     if (didChange) {
-  //       handleSave();
-  //       setDidChange(false);
-  //     }
-  //   }, 1000);
+  useEffect(() => {
+    const autosaveInterval = setInterval(() => {
+      if (didChange) {
+        handleSave();
+        setDidChange(false);
+      }
+    }, 1000);
 
-  //   return () => clearInterval(autosaveInterval);
-  // }, [didChange, handleSave]);
+    return () => clearInterval(autosaveInterval);
+  }, [didChange, handleSave]);
 
   // If post data hasn't been fetched yet, display a loading message
   if (!post) return <div>Loading...</div>;
@@ -147,11 +231,33 @@ const Post = () => {
             <div>title: {post.title}</div>
             <div>description: {post.description}</div>
             <div>type: {post.type}</div>
-            <div>hash: {shortenHash(post.contentHash)}</div>
-            <button className="btn bg-base-100 border-0 rounded-none w-full" type="submit" onClick={upload}>
-              Upload and sign
-            </button>
-            {post ? <button onClick={() => signTypedData()}>Sign Data</button> : ""}
+            {post.contentHash ? <div>hash: {shortenHash(post.contentHash)}</div> : ""}
+            {post.url ? <div>url: {shortenHash(post.url)}</div> : ""}
+
+            {post.signature ? <div>signature: {shortenHash(post.signature)}</div> : ""}
+            {post.state === PostState.DRAFT ? (
+              <button className="btn bg-base-100 border-0 rounded-none w-full" onClick={upload}>
+                Upload
+              </button>
+            ) : (
+              ""
+            )}
+
+            {post.state === PostState.UPLOADED ? (
+              <button className="btn bg-base-100 border-0 rounded-none w-full" onClick={signData}>
+                Sign Data
+              </button>
+            ) : (
+              ""
+            )}
+
+            {post.state === PostState.SIGNED ? (
+              <button className="btn bg-base-100 border-0 rounded-none w-full" onClick={publish}>
+                Publish
+              </button>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="pt-6 ">

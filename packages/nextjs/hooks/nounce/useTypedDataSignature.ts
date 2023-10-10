@@ -1,12 +1,8 @@
-import { useSignTypedData } from "wagmi";
+import { useCallback } from "react";
+import { signTypedData } from "@wagmi/core";
 import { IPost } from "~~/database/types";
 
-interface UseTypedDataSignatureProps {
-  post: IPost;
-  onSuccess: (data: any) => void;
-}
-
-export function useTypedDataSignature({ post, onSuccess }: UseTypedDataSignatureProps) {
+export function useTypedDataSignature() {
   const domain = {
     name: "Nounce",
     version: "1",
@@ -24,21 +20,28 @@ export function useTypedDataSignature({ post, onSuccess }: UseTypedDataSignature
     ],
   } as const;
 
-  const message = {
-    title: post.title,
-    description: post.description || "",
-    url: post.url || "",
-    contentHash: post.contentHash as `0x${string}`,
-    dataType: post.type,
-  } as const;
+  const getSignature = useCallback(async (post: IPost): Promise<string | null> => {
+    const message = {
+      title: post.title,
+      description: post.description || "",
+      url: post.url || "",
+      contentHash: post.contentHash as `0x${string}`,
+      dataType: post.type,
+    } as const;
 
-  const { signTypedData } = useSignTypedData({
-    domain,
-    message,
-    primaryType: "Data",
-    types,
-    onSuccess,
-  });
+    try {
+      const signature = await signTypedData({
+        domain,
+        message,
+        primaryType: "Data",
+        types,
+      });
+      return signature;
+    } catch (error) {
+      console.error("Failed to get signature:", error);
+      return null;
+    }
+  }, []);
 
-  return { signTypedData };
+  return { getSignature };
 }
