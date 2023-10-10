@@ -6,11 +6,11 @@ import { useWeb3Storage } from "~~/hooks/nounce/useWeb3Storage";
 const Storage: NextPage = () => {
   const [content, setContent] = useState("# This is markdown");
 
-  const { cid, storeContent, isLoading, progress, error } = useWeb3Storage();
+  const { storeFiles } = useWeb3Storage();
 
   const handleSubmit = async () => {
     console.log(content);
-    await storeContent(content, "document.md", "text/markdown");
+    await storeFiles(content, "document.md", "text/markdown");
   };
 
   return (
@@ -31,23 +31,21 @@ const Storage: NextPage = () => {
             </div>
 
             <div className="card-actions justify-end">
-              <button className="btn btn-primary" onClick={handleSubmit} disabled={isLoading}>
+              <button className="btn btn-primary" onClick={handleSubmit}>
                 Upload Markdown
               </button>
             </div>
           </div>
         </div>
-        <div>Progress: {progress}%</div>
-        {error && <div>Error: {error.message}</div>}
         <div>
-          <a
+          {/* <a
             target="_blank"
             rel="noopener noreferrer"
             href={`https://w3s.link/ipfs/${cid}`}
             className="btn btn-primary"
           >
             {cid}
-          </a>
+          </a> */}
         </div>
       </div>
     </>

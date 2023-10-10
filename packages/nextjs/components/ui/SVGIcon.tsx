@@ -22,7 +22,7 @@ const SVGIcon: React.FC<SVGIconProps> = ({ name, className }) => {
     <svg className={className} viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
       {shouldUseGradient && gradientDefs}
       {(() => {
-        switch (name) {
+        switch (name.toLowerCase()) {
           case "article":
             return (
               <path
@@ -46,7 +46,7 @@ const SVGIcon: React.FC<SVGIconProps> = ({ name, className }) => {
             );
           // Add cases for other icons as needed
           default:
-            return null; // or a default path
+            return null;
         }
       })()}
     </svg>

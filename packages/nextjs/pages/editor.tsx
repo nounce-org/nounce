@@ -7,7 +7,7 @@ import ArticleForm from "~~/components/editor/ArticleForm";
 import EventForm from "~~/components/editor/EventForm";
 import MediaForm from "~~/components/editor/MediaForm";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
-import { generateHash, shortenHash } from "~~/utils/nounce/utils";
+import { generateHash } from "~~/utils/nounce/utils";
 
 const Editor: NextPage = () => {
   const [activeTab, setActiveTab] = useState<"article" | "event" | "media" | null>("article");
@@ -136,7 +136,7 @@ const Editor: NextPage = () => {
               {activeTab === "event" && <EventForm onChange={data => setFormData(data)} />}
               {activeTab === "media" && <MediaForm onChange={data => setFormData(data)} />}
 
-              <div className="w-full text-right text-sm">Hash: {shortenHash(contentHash)}</div>
+              {/* <div className="w-full text-right text-sm">Hash: {shortenHash(contentHash)}</div> */}
             </div>
           </div>
         </div>

@@ -41,16 +41,10 @@ export const Header = () => {
         <NavLink href="/posts">POSTS</NavLink>
       </li>
       <li>
-        <NavLink href="/edit">
-          {/* <BugAntIcon className="h-4 w-4" /> */}
-          EDIT
-        </NavLink>
+        <NavLink href="/info">INFO</NavLink>
       </li>
       <li>
-        <NavLink href="/announcements">
-          {/* <BugAntIcon className="h-4 w-4" /> */}
-          CONFIG
-        </NavLink>
+        <NavLink href="/announcements">SETTINGS</NavLink>
       </li>
       {/* <li>
         <NavLink href="/storage">
@@ -105,7 +99,7 @@ export const Header = () => {
               </ul>
             )}
           </div>
-          <Link href="/" passHref className="hidden md:block items-center gap-2 shrink-0 bg-gray-100 w-14 h-14 mr-12">
+          <Link href="/" passHref className="hidden md:block items-center gap-2 shrink-0 bg-base-300 w-14 h-14 mr-12">
             <div className="flex relative w-8 h-8 m-3">
               <Logo format="logo" className="w-8 h-8 fill-current" />
             </div>
