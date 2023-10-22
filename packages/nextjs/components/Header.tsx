@@ -43,11 +43,11 @@ export const Header = () => {
       <li>
         <NavLink href="/announcements">POSTS</NavLink>
       </li>
-
-      <li>
+      {/* 
+            <li>
         <NavLink href="/info">ABOUT</NavLink>
       </li>
-      {/* <li>
+      <li>
         <NavLink href="/storage">
           Store
         </NavLink>
@@ -73,7 +73,7 @@ export const Header = () => {
   );
 
   return (
-    <div className="w-full">
+    <div className="w-full z-50">
       <div className="sticky navbar align-items-normal bg-base-100 p-0 h-14 m-0">
         <div className="navbar-start">
           <div className="lg:hidden dropdown" ref={burgerMenuRef}>

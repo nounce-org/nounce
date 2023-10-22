@@ -36,9 +36,5 @@
     "husky": "~8.0.3",
     "lint-staged": "~13.2.2"
   },
-  "packageManager": "yarn@3.2.3",
-  "dependencies": {
-    "@mdxeditor/editor": "^1.2.2",
-    "web3.storage": "^4.5.5"
-  }
+  "packageManager": "yarn@3.2.3"
 }
