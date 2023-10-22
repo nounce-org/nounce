@@ -2,6 +2,7 @@
 pragma solidity ^0.8.19;
 
 import "../contracts/YourContract.sol";
+import "../contracts/Announcer.sol";
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -18,10 +19,24 @@ contract DeployScript is ScaffoldETHDeploy {
         YourContract yourContract = new YourContract(
             vm.addr(deployerPrivateKey)
         );
+
+
         console.logString(
             string.concat(
                 "YourContract deployed at: ",
                 vm.toString(address(yourContract))
+            )
+        );
+
+        Announcer announcer = new Announcer(
+            vm.addr(deployerPrivateKey)
+        );
+
+
+        console.logString(
+            string.concat(
+                "Announcer deployed at: ",
+                vm.toString(address(announcer))
             )
         );
         vm.stopBroadcast();

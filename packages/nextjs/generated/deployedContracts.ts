@@ -5,7 +5,7 @@ const contracts = {
       chainId: "31337",
       contracts: {
         YourContract: {
-          address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+          address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
           abi: [
             {
               inputs: [
@@ -246,6 +246,103 @@ const contracts = {
             {
               stateMutability: "payable",
               type: "receive",
+            },
+          ],
+        },
+        Announcer: {
+          address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          abi: [
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_owner",
+                  type: "address",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "timestamp",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "string",
+                  name: "data",
+                  type: "string",
+                },
+              ],
+              name: "Announcement",
+              type: "event",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+                {
+                  internalType: "string",
+                  name: "data",
+                  type: "string",
+                },
+              ],
+              name: "announce",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "owner",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes4",
+                  name: "interfaceId",
+                  type: "bytes4",
+                },
+              ],
+              name: "supportsInterface",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
             },
           ],
         },

@@ -38,13 +38,14 @@ export const Header = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink href="/posts">POSTS</NavLink>
+        <NavLink href="/posts">COMPOSE</NavLink>
       </li>
       <li>
-        <NavLink href="/info">INFO</NavLink>
+        <NavLink href="/announcements">POSTS</NavLink>
       </li>
+
       <li>
-        <NavLink href="/announcements">SETTINGS</NavLink>
+        <NavLink href="/info">ABOUT</NavLink>
       </li>
       {/* <li>
         <NavLink href="/storage">
