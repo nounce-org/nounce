@@ -9,7 +9,7 @@ const Announcements: NextPage = () => {
     isLoading: isLoadingEvents,
     error: errorReadingEvents,
   } = useScaffoldEventHistory({
-    contractName: "Announcer",
+    contractName: "YourContract",
     eventName: "Announcement",
     fromBlock: 1n,
     blockData: true,
@@ -27,19 +27,19 @@ const Announcements: NextPage = () => {
         {events && events.length > 0 ? (
           <div className=" grid grid-cols-1 md:grid-cols-2 gap-6 mx-6">
             {events.map((event, index) => {
-              const { signer, signature, timestamp, data } = event.args;
-              const scheme = data ? JSON.parse(data) : {};
+              const { signer, signature, timestamp, metadata } = event.args;
+              // const scheme = data ? JSON.parse(data) : {};
               return (
                 <div className="card w-full bg-base-100" key={index}>
                   <div className="card-body">
                     <h2 className="card-title">
-                      {scheme.headline ? scheme.headline : "-"}
+                      {metadata?.title ? metadata?.title : "-"}
                       <div className="badge badge-ghost">
                         {timestamp ? new Date(Number(timestamp * 1000n)).toLocaleString() : "Unknown"}
                       </div>
                     </h2>
                     <div className="w-full flex flex-col">
-                      <div className="overflow-scroll">{scheme.url ? scheme.url : ""} </div>
+                      <div className="overflow-scroll"><a target="_blank" rel="noopener noreferrer" href={`https://w3s.link/ipfs/${metadata?.url}`}>{metadata?.url ? metadata?.url : ""}</a> </div>
 
                       <div className="flex flex-row gap-6">
                         Signed by:
@@ -53,10 +53,10 @@ const Announcements: NextPage = () => {
                       <div className="overflow-scroll"> Signature: {signature} </div>
                     </div>
 
-                    <div className="card-actions justify-end">
+                    {/* <div className="card-actions justify-end">
                       <div className="badge badge-outline">TX</div>
                       <div className="badge badge-primary">✓</div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               );

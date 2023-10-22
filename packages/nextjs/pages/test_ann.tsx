@@ -78,9 +78,9 @@ const ExampleUI = () => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />
       </MetaHeader>
-      <div className="grid lg:grid-cols-2 flex-grow" data-theme="exampleUi">
-        <button onClick={getSign}>Sign</button>
-        <button onClick={publish}>Post</button>
+      <div className="grid lg:grid-cols-2 flex-grow bg-red gap-6">
+        <button className="bg-base-200" onClick={getSign}>Sign</button>
+        <button className="bg-base-200" onClick={publish}>Post</button>
       </div>
     </>
   );

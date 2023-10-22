@@ -43,10 +43,10 @@ export const Header = () => {
       <li>
         <NavLink href="/announcements">POSTS</NavLink>
       </li>
-      {/* 
-            <li>
-        <NavLink href="/info">ABOUT</NavLink>
+      <li>
+        <NavLink href="/test_ann">DATA</NavLink>
       </li>
+      {/* 
       <li>
         <NavLink href="/storage">
           Store

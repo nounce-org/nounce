@@ -31,7 +31,7 @@ contract YourContract {
         Metadata metadata);
 
         // The function to make an announcement
-    function announce(bytes memory signature, Metadata memory metadata) public isOwner {
+    function announce(bytes memory signature, Metadata memory metadata) public {
         emit Announcement(msg.sender,  signature, block.timestamp, metadata);
     }
 
